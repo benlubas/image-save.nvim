@@ -3,6 +3,12 @@
 An incredibly simple plugin that adds an easy command for saving
 [3rd/image.nvim](https://github.com/3rd/image.nvim) images.
 
+
+
+https://github.com/benlubas/image-save.nvim/assets/56943754/99ef6bba-b943-4e07-8414-657230ef779a
+
+
+
 ## Install
 
 with Lazy:
