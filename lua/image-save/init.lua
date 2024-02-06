@@ -20,7 +20,7 @@ M.save_as = function(path)
     vim.ui.input({
       prompt = "Path to saved image:\n",
       completion = "file",
-      default = vim.fn.fnamemodify(vim.fs.normalize(vim.fn.getcwd(0)) .. "/", ':~:.')
+      default = vim.fs.normalize(vim.fn.getcwd(0)) .. "/"
     }, function(save_to)
       if save_to then
         os.execute("cp " .. path .. " " .. save_to)
