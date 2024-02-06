@@ -17,7 +17,11 @@ end
 
 M.save_as = function(path)
   vim.schedule(function()
-    vim.ui.input({ prompt = "Path to saved image:\n", completion = "file" }, function(save_to)
+    vim.ui.input({
+      prompt = "Path to saved image:\n",
+      completion = "file",
+      default = vim.fs.normalize(vim.fn.getcwd(0)) .. "/"
+    }, function(save_to)
       if save_to then
         os.execute("cp " .. path .. " " .. save_to)
       else
