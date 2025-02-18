@@ -5,33 +5,36 @@ local default_config = {
 }
 
 M.setup = function(opts)
-  local config = vim.tbl_deep_extend("force", default_config, opts)
+  local config = vim.tbl_deep_extend("force", default_config, opts or {})
 
   if config.enable_mouse then
-    pcall(vim.cmd.aunmenu, "PopUp.How-to\\ disable\\ mouse")
     pcall(vim.cmd.aunmenu, "PopUp.How-to\\ disable\\ mouse")
     pcall(vim.cmd.aunmenu, "PopUp.-1-")
     vim.cmd.menu("PopUp.Save\\ Image :SaveImage<CR>")
   end
 end
 
-M.save_as = function(path)
-  vim.schedule(function()
-    vim.ui.input({
-      prompt = "Path to saved image:\n",
-      completion = "file",
-      default = vim.fs.normalize(vim.fn.getcwd(0)) .. "/"
-    }, function(save_to)
-      if save_to then
-        os.execute("cp " .. path .. " " .. save_to)
-      else
-        vim.notify("Aborting image save", vim.log.levels.INFO)
-      end
+M.save_as = function(path, path_to)
+  if path_to and path_to ~= "" then
+    os.execute("cp " .. path .. " " .. path_to)
+  else
+    vim.schedule(function()
+      vim.ui.input({
+        prompt = "Path to saved image:\n",
+        completion = "file",
+        default = vim.fs.normalize(vim.fn.getcwd(0)) .. "/"
+      }, function(save_to)
+        if save_to then
+          os.execute("cp " .. path .. " " .. save_to)
+        else
+          vim.notify("Aborting image save", vim.log.levels.INFO)
+        end
+      end)
     end)
-  end)
+  end
 end
 
-M.save_nearby_image = function()
+M.save_nearby_image = function(path_to)
   local win = vim.api.nvim_get_current_win()
   local buf = vim.api.nvim_get_current_buf()
 
@@ -55,7 +58,7 @@ M.save_nearby_image = function()
     return
   end
 
-  M.save_as(closest_img.path)
+  M.save_as(closest_img.path, path_to)
 end
 
 return M
