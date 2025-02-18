@@ -23,6 +23,11 @@ The `:SaveImage` command will find the nearest image to your cursor in the curre
 - Prompt you to save that image if no path is provided
 - Save directly to the specified path if provided (e.g. `:SaveImage path/to/save.png`)
 
+You can map this command to a key combination, for example:
+```lua
+vim.api.nvim_set_keymap('n', '<leader>is', ':SaveImage /tmp/test.png<CR>')
+```
+
 The command supports file path completion, so you can use <Tab> to complete paths.
 
 The file path (whether entered in prompt or passed to command) is used in a `cp` command from the current working directory. So you can
