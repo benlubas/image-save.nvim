@@ -19,10 +19,18 @@ with Lazy:
 
 ## Usage
 
-The `:SaveImage` will find the nearest image to your cursor in the current window, and prompt you to
-save that image.
+The `:SaveImage` command will find the nearest image to your cursor in the current window, and either:
+- Prompt you to save that image if no path is provided
+- Save directly to the specified path if provided (e.g. `:SaveImage path/to/save.png`)
 
-The file path you enter is used in a `cp` command from the current wording directory. So you can
+You can map this command to a key combination, for example:
+```lua
+vim.api.nvim_set_keymap('n', '<leader>is', ':SaveImage /tmp/test.png<CR>')
+```
+
+The command supports file path completion, so you can use <Tab> to complete paths.
+
+The file path (whether entered in prompt or passed to command) is used in a `cp` command from the current working directory. So you can
 pass `~/path/to/cwd/image.png` or just `image.png` and those are the same.
 
 _Yes I know the command and the plugin title are 'backwards' :SaveImage makes more sense, but
